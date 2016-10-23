@@ -1,0 +1,11 @@
+*_local.*
+sftp-config.json
+test/server/node_modules
+.idea/
+.DS_Store
+node_modules/
+node_modules/*
+jspm_packages/
+jspm_packages/*
+doc/
+*.csv
