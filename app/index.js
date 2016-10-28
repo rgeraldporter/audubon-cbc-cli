@@ -7,8 +7,6 @@ var _audubonCbcCsvParser2 = _interopRequireDefault(_audubonCbcCsvParser);
 
 var _audubonCbcCsv = require('audubon-cbc-csv');
 
-var _audubonCbcCsv2 = _interopRequireDefault(_audubonCbcCsv);
-
 var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
@@ -21,9 +19,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var userArgs = process.argv.slice(2);
 var filename = userArgs[0];
+var defaultCsvFn = _audubonCbcCsv.createCountCsv;
 var countData = (0, _audubonCbcCsvParser2.default)(filename);
-var newCsv = (0, _audubonCbcCsv2.default)(countData);
-var path = process.cwd() + '/' + countData.circle.code.emit() + '-transformed.csv';
+var perHour = userArgs[1] && userArgs[1] === '--per-hour';
+var newCsv = perHour ? (0, _audubonCbcCsv.createPerHourCsv)(countData) : defaultCsvFn(countData);
+var suffix = perHour ? '-transformed-per-hour.csv' : '-transformed-count.csv';
+var path = process.cwd() + '/' + countData.circle.code.emit() + suffix;
 
 _fs2.default.writeFile(path, newCsv, function (err) {
 
