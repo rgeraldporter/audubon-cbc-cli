@@ -28,7 +28,23 @@ So, for example...
 cbc-csv HistoricalResultsByCount\ \[ONFV-1901-2016\].csv
 ```
 
-... which results in a file called `ONFV-transformed.csv` in this case.
+... which results in a file called `ONFV-transformed-count.csv` in this case.
+
+### Convert to Per-Hour Data
+
+The only flag option available so far is `--per-hour`, which will instead make a CSV out of the count-per-hour data.
+
+```
+cbc-csv [CSVFileName] --per-hour
+```
+
+Example:
+
+```
+cbc-csv HistoricalResultsByCount\ \[ONFV-1901-2016\].csv --per-hour
+```
+
+... which results in a file called `ONFV-transformed-per-hour.csv` in this case.
 
 ## Additional Terms of Use
 
