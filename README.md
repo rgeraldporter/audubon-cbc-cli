@@ -1,5 +1,5 @@
 # CLI Tools for Audubon CBC Data (audubon-cbc-cli)
-####v0.1.0
+####v0.2.1
 
 A CLI tool for transforming [Audubon's Christmas Bird Count Data](http://netapp.audubon.org/CBCObservation/).
 

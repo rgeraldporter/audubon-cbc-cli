@@ -1,7 +1,7 @@
 {
   "name": "audubon-cbc-cli",
   "preferGlobal": true,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Robert Gerald Porter <rob@inpictures.ca>",
   "description": "CLI Tools for Audubon CBC Data",
   "main": "./app/index.js",
