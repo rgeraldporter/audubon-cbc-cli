@@ -22,7 +22,26 @@ var filename = userArgs[0];
 var defaultCsvFn = _audubonCbcCsv.createCountCsv;
 var countData = (0, _audubonCbcCsvParser2.default)(filename);
 var perHour = userArgs[1] && userArgs[1] === '--per-hour';
-var newCsv = perHour ? (0, _audubonCbcCsv.createPerHourCsv)(countData) : defaultCsvFn(countData);
+var newCsv = void 0;
+
+switch (userArgs[1]) {
+
+    case '--per-hour':
+
+        newCsv = (0, _audubonCbcCsv.createPerHourCsv)(countData);
+        break;
+
+    case '--reverse':
+
+        newCsv = (0, _audubonCbcCsv.createCountReverseCsv)(countData);
+        break;
+
+    default:
+
+        newCsv = defaultCsvFn(countData);
+        break;
+}
+
 var suffix = perHour ? '-transformed-per-hour.csv' : '-transformed-count.csv';
 var path = process.cwd() + '/' + countData.circle.code.emit() + suffix;
 

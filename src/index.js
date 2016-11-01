@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 import cbcParse from 'audubon-cbc-csv-parser';
-import {createCountCsv, createPerHourCsv} from 'audubon-cbc-csv';
+import {createCountCsv, createPerHourCsv, createCountReverseCsv} from 'audubon-cbc-csv';
 import fs from 'fs';
 import url from 'url';
 
@@ -10,7 +10,26 @@ const filename = userArgs[0];
 const defaultCsvFn = createCountCsv;
 const countData = cbcParse(filename);
 const perHour = userArgs[1] && userArgs[1] === '--per-hour';
-const newCsv =  perHour ? createPerHourCsv(countData) : defaultCsvFn(countData);
+let newCsv;
+
+switch(userArgs[1]) {
+
+    case '--per-hour':
+
+        newCsv = createPerHourCsv(countData);
+        break;
+
+    case '--reverse':
+
+        newCsv = createCountReverseCsv(countData);
+        break;
+
+    default:
+
+        newCsv = defaultCsvFn(countData);
+        break;
+}
+
 const suffix = perHour ? '-transformed-per-hour.csv' : '-transformed-count.csv';
 const path = process.cwd() + '/' + countData.circle.code.emit() + suffix;
 

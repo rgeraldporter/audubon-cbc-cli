@@ -1,5 +1,5 @@
 # CLI Tools for Audubon CBC Data (audubon-cbc-cli)
-####v0.2.1
+####v0.3.0
 
 A CLI tool for transforming [Audubon's Christmas Bird Count Data](http://netapp.audubon.org/CBCObservation/).
 
@@ -29,6 +29,8 @@ cbc-csv HistoricalResultsByCount\ \[ONFV-1901-2016\].csv
 ```
 
 ... which results in a file called `ONFV-transformed-count.csv` in this case.
+
+Optionally, you may add `--reverse` to get a CSV where the year order goes from most recent to oldest.
 
 ### Convert to Per-Hour Data
 
