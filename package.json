@@ -1,7 +1,7 @@
 {
   "name": "audubon-cbc-cli",
   "preferGlobal": true,
-  "version": "0.4.0",
+  "version": "0.4.1",
   "author": "Robert Gerald Porter <rob@inpictures.ca>",
   "description": "CLI Tools for Audubon CBC Data",
   "main": "./app/index.js",
@@ -31,14 +31,15 @@
     "url": "git+https://github.com/rgeraldporter/audubon-cbc-cli.git"
   },
   "keywords": [
-    "ebird",
-    "hotspots",
-    "ebird hotspots",
-    "ebird histogram",
+    "christmas bird count",
+    "cbc",
     "birds",
-    "bird records",
+    "audubon",
+    "bird studies canada",
+    "bsc",
     "avian",
-    "bird"
+    "bird",
+    "csv"
   ],
   "license": "MIT",
   "scripts": {
