@@ -1,42 +1,83 @@
 #! /usr/bin/env node
 
 import cbcParse from 'audubon-cbc-csv-parser';
-import {createCountCsv, createPerHourCsv, createCountReverseCsv} from 'audubon-cbc-csv';
+import * as cbcCsv from 'audubon-cbc-csv';
 import fs from 'fs';
 import url from 'url';
 
 const userArgs = process.argv.slice(2);
 const filename = userArgs[0];
-const defaultCsvFn = createCountCsv;
+const defaultCsvFn = cbcCsv.createCountCsv;
 const countData = cbcParse(filename);
-const perHour = userArgs[1] && userArgs[1] === '--per-hour';
-let newCsv;
+let newCsv, suffix;
 
-switch(userArgs[1]) {
+const options = userArgs.reduce((prev, current, index) => {
 
-    case '--per-hour':
+    if (!index) return prev;
 
-        newCsv = createPerHourCsv(countData);
+    if (prev.skipNext) {
+        prev.skipNext = false;
+        return prev;
+    }
+
+    switch(current) {
+
+        case '--data':
+        case '-d':
+
+            prev.data = userArgs[index+1];
+            prev.skipNext = true;
+            break;
+
+        case '--reverse':
+        case '-r': 
+
+            prev.reverse = true;
+            break;
+
+        default:
+
+            prev.unknown = current;
+            break;
+    }
+
+    return prev;
+}, {data: null});
+
+switch(options.data) {
+
+    case 'per-hour':
+
+        newCsv = options.reverse ?
+            cbcCsv.createPerHourReverseCsv(countData) : cbcCsv.createPerHourCsv(countData);
+        suffix = '-transformed-per-hour.csv'
         break;
 
-    case '--reverse':
+    case 'count':
+    case null:
 
-        newCsv = createCountReverseCsv(countData);
+        newCsv = options.reverse ?
+            cbcCsv.createCountReverseCsv(countData) : defaultCsvFn(countData);
+            suffix = '-transformed-count.csv';
         break;
 
     default:
 
-        newCsv = defaultCsvFn(countData);
+        options.unknown = options.data;
         break;
 }
 
-const suffix = perHour ? '-transformed-per-hour.csv' : '-transformed-count.csv';
+if (options.unknown) {
+    console.log('Unknown argument: ' + options.unknown);
+    process.exit(1);
+}
+
 const path = process.cwd() + '/' + countData.circle.code.emit() + suffix;
 
 fs.writeFile(path, newCsv, err => {
 
     if (err) return console.log(err);
 
-    console.log("The transformed CSV file was saved to " + path);
+    console.log('The transformed CSV file was saved to ' + path);
     return true;
 });

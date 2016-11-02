@@ -1,7 +1,7 @@
 {
   "name": "audubon-cbc-cli",
   "preferGlobal": true,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "Robert Gerald Porter <rob@inpictures.ca>",
   "description": "CLI Tools for Audubon CBC Data",
   "main": "./app/index.js",
@@ -55,7 +55,7 @@
   "dependencies": {
     "bhttp": "^1.2.4",
     "bluebird": "^3.4.6",
-    "audubon-cbc-csv": "^0.3.0",
+    "audubon-cbc-csv": "^0.4.0",
     "audubon-cbc-csv-parser": "^0.1.1"
   }
 }

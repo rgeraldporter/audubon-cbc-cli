@@ -1,5 +1,5 @@
 # CLI Tools for Audubon CBC Data (audubon-cbc-cli)
-####v0.3.0
+####v0.4.0
 
 A CLI tool for transforming [Audubon's Christmas Bird Count Data](http://netapp.audubon.org/CBCObservation/).
 
@@ -20,7 +20,7 @@ npm install audubon-cbc-cli --global
 It's a pretty simple command-line tool right now. The only command right now is:
 
 ```
-cbc-csv [CSVFileName]
+cbc-csv [CSVFileName] [options]
 ```
 So, for example...
 
@@ -30,20 +30,20 @@ cbc-csv HistoricalResultsByCount\ \[ONFV-1901-2016\].csv
 
 ... which results in a file called `ONFV-transformed-count.csv` in this case.
 
-Optionally, you may add `--reverse` to get a CSV where the year order goes from most recent to oldest.
+Optionally, you may add `--reverse` or `-r` to get a CSV where the year order goes from most recent to oldest.
 
 ### Convert to Per-Hour Data
 
-The only flag option available so far is `--per-hour`, which will instead make a CSV out of the count-per-hour data.
+You can use the `--data` flag to change what data you'd like to extract. Right now the only options available are `--data per-hour` and `--data count` (default).
 
 ```
-cbc-csv [CSVFileName] --per-hour
+cbc-csv [CSVFileName] --data per-hour
 ```
 
 Example:
 
 ```
-cbc-csv HistoricalResultsByCount\ \[ONFV-1901-2016\].csv --per-hour
+cbc-csv HistoricalResultsByCount\ \[ONFV-1901-2016\].csv --data per-hour
 ```
 
 ... which results in a file called `ONFV-transformed-per-hour.csv` in this case.

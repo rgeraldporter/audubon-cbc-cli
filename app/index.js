@@ -7,6 +7,8 @@ var _audubonCbcCsvParser2 = _interopRequireDefault(_audubonCbcCsvParser);
 
 var _audubonCbcCsv = require('audubon-cbc-csv');
 
+var cbcCsv = _interopRequireWildcard(_audubonCbcCsv);
+
 var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
@@ -15,40 +17,82 @@ var _url = require('url');
 
 var _url2 = _interopRequireDefault(_url);
 
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var userArgs = process.argv.slice(2);
 var filename = userArgs[0];
-var defaultCsvFn = _audubonCbcCsv.createCountCsv;
+var defaultCsvFn = cbcCsv.createCountCsv;
 var countData = (0, _audubonCbcCsvParser2.default)(filename);
-var perHour = userArgs[1] && userArgs[1] === '--per-hour';
-var newCsv = void 0;
+var newCsv = void 0,
+    suffix = void 0;
 
-switch (userArgs[1]) {
+var options = userArgs.reduce(function (prev, current, index) {
 
-    case '--per-hour':
+    if (!index) return prev;
 
-        newCsv = (0, _audubonCbcCsv.createPerHourCsv)(countData);
+    if (prev.skipNext) {
+        prev.skipNext = false;
+        return prev;
+    }
+
+    switch (current) {
+
+        case '--data':
+        case '-d':
+
+            prev.data = userArgs[index + 1];
+            prev.skipNext = true;
+            break;
+
+        case '--reverse':
+        case '-r':
+
+            prev.reverse = true;
+            break;
+
+        default:
+
+            prev.unknown = current;
+            break;
+    }
+
+    return prev;
+}, { data: null });
+
+switch (options.data) {
+
+    case 'per-hour':
+
+        newCsv = options.reverse ? cbcCsv.createPerHourReverseCsv(countData) : cbcCsv.createPerHourCsv(countData);
+        suffix = '-transformed-per-hour.csv';
         break;
 
-    case '--reverse':
+    case 'count':
+    case null:
 
-        newCsv = (0, _audubonCbcCsv.createCountReverseCsv)(countData);
+        newCsv = options.reverse ? cbcCsv.createCountReverseCsv(countData) : defaultCsvFn(countData);
+        suffix = '-transformed-count.csv';
         break;
 
     default:
 
-        newCsv = defaultCsvFn(countData);
+        options.unknown = options.data;
         break;
 }
 
-var suffix = perHour ? '-transformed-per-hour.csv' : '-transformed-count.csv';
+if (options.unknown) {
+    console.log('Unknown argument: ' + options.unknown);
+    process.exit(1);
+}
+
 var path = process.cwd() + '/' + countData.circle.code.emit() + suffix;
 
 _fs2.default.writeFile(path, newCsv, function (err) {
 
     if (err) return console.log(err);
 
-    console.log("The transformed CSV file was saved to " + path);
+    console.log('The transformed CSV file was saved to ' + path);
     return true;
 });
