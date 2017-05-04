@@ -1,9 +1,9 @@
 {
   "name": "audubon-cbc-cli",
   "preferGlobal": true,
-  "version": "0.4.1",
+  "version": "1.0.0",
   "author": "Robert Gerald Porter <rob@inpictures.ca>",
-  "description": "CLI Tools for Audubon CBC Data",
+  "description": "CLI toolset for Audubon Christmas Bird Count data.",
   "main": "./app/index.js",
   "contributors": [
     "Robert Gerald Porter <rob@inpictures.ca>"

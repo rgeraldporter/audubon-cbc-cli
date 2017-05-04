@@ -1,11 +1,11 @@
 # CLI Tools for Audubon CBC Data (audubon-cbc-cli)
-####v0.4.1
+#### v1.0.0
 
 A CLI tool for transforming [Audubon's Christmas Bird Count Data](http://netapp.audubon.org/CBCObservation/).
 
 ## Features
 
-Currently, the only feature is transformation of an Audubon CBC "Historical Results by Count" CSV file into a better formatted CSV. More features coming soon!
+Currently, the only feature is transformation of an Audubon CBC "Historical Results by Count" CSV file into a better formatted CSV.
 
 ## Installation
 
@@ -56,11 +56,11 @@ Please make note of [Audubon's Terms of Use for CBC Data](http://www.audubon.org
 
 The Christmas Bird Count (CBC) is a Registered Trademark of the National Audubon Society. CBC Data is provided by National Audubon Society and through the generous efforts of Bird Studies Canada and countless volunteers across the western hemisphere.
 
-##License
+## License
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Robert Gerald Porter
+Copyright (c) 2016-2017 Robert Gerald Porter
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
